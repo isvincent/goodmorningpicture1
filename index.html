@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#fff4d7">
+  <meta name="description" content="收藏一張張溫暖的早安圖，為今天留一點好心情。">
+  <title>早安圖集錦</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="sun-wash" aria-hidden="true"></div>
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="早安圖集錦首頁"><span class="brand-mark">☀️</span><span>早安圖集錦</span></a>
+    <nav class="top-actions" aria-label="主要操作">
+      <button class="icon-button" id="settingsOpen" aria-label="開啟顯示與操作設定" title="顯示與操作設定">⚙️</button>
+      <button class="icon-button" id="soundToggle" aria-label="切換音效" title="音效開關">🔔</button>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="sparkle">✦</span> 給今天一個溫柔的開始</p>
+        <h1>早安圖集錦</h1>
+        <p class="hero-text">把喜歡的句子收藏起來，讓日常多一點陽光與好心情。</p>
+        <div class="hero-meta"><span class="live-dot"></span><span id="galleryStatus" aria-live="polite">正在整理晨光…</span></div>
+      </div>
+      <div class="hero-art" aria-hidden="true"><span class="art-sun">☀</span><span class="art-cloud cloud-one">☁</span><span class="art-cloud cloud-two">☁</span><span class="art-flower">✿</span><span class="art-bird">⌁</span></div>
+      <div class="hero-sticker" aria-hidden="true">Have a<br>lovely day!</div>
+    </section>
+
+    <section class="toolbar" aria-label="圖集工具列">
+      <div class="search-wrap"><span aria-hidden="true">⌕</span><input id="searchInput" type="search" placeholder="搜尋圖上的句子…" aria-label="搜尋圖片內容"></div>
+      <div class="toolbar-actions">
+        <label class="select-wrap"><span class="sr-only">排序方式</span><select id="sortSelect"><option value="newest">最新加入</option><option value="oldest">最早加入</option><option value="az">文字順序</option><option value="random">隨機看看</option></select></label>
+        <button class="filter-button" id="favoritesFilter" aria-pressed="false">♡ <span>我的收藏</span></button>
+      </div>
+    </section>
+    <div class="tag-row" id="tagRow" aria-label="主題篩選"></div>
+    <section class="gallery-section" aria-labelledby="galleryHeading">
+      <div class="section-heading"><div><p class="eyebrow">A LITTLE SUNSHINE</p><h2 id="galleryHeading">今天的溫暖，從這裡開始</h2></div><span class="count-pill" id="resultCount">載入中</span></div>
+      <div class="gallery-grid" id="galleryGrid" aria-live="polite"></div>
+      <div class="empty-state" id="emptyState" hidden><span>🌼</span><h3>這裡還沒有找到圖片</h3><p>換個關鍵字，或清除篩選再看看吧。</p><button class="button-soft" id="clearFilters">清除篩選</button></div>
+      <div class="load-error" id="loadError" hidden><span>🌤️</span><h3>晨光暫時沒連上</h3><p id="errorMessage">請稍後重新整理，或確認 Apps Script 網址與 Drive 資料夾權限。</p><button class="button-primary" id="retryLoad">重新載入</button></div>
+    </section>
+    <footer class="footer"><span>願你今天也被美好接住 <span aria-hidden="true">♡</span></span><button id="backToTop" class="back-top">回到上方 ↑</button></footer>
+  </main>
+
+  <dialog class="settings-dialog" id="settingsDialog" aria-labelledby="settingsTitle">
+    <form method="dialog"><button class="dialog-close" aria-label="關閉設定">×</button></form>
+    <div class="dialog-title"><span>⚙️</span><div><p class="eyebrow">MAKE IT YOURS</p><h2 id="settingsTitle">顯示與操作設定</h2></div></div>
+    <div class="settings-list">
+      <div class="setting-row"><div><strong>全螢幕</strong><small>專心欣賞每一張圖</small></div><button class="switch" data-setting="fullscreen" role="switch" aria-checked="false"><span></span></button></div>
+      <div class="setting-row"><div><strong>音效</strong><small>操作時播放輕柔提示音</small></div><button class="switch" data-setting="sound" role="switch" aria-checked="false"><span></span></button></div>
+      <div class="setting-row"><div><strong>裝置</strong><small>調整瀏覽版面寬度</small></div><select data-setting="device" class="setting-select"><option value="auto">自動</option><option value="phone">手機</option><option value="tablet">平板</option><option value="desktop">電腦</option></select></div>
+      <div class="setting-row"><div><strong>版面</strong><small>圖片展示排列方向</small></div><select data-setting="layout" class="setting-select"><option value="auto">自動</option><option value="portrait">直式</option><option value="landscape">橫式</option></select></div>
+      <div class="setting-row"><div><strong>語言</strong><small>介面顯示語言</small></div><select data-setting="language" class="setting-select"><option value="zh">繁體中文</option><option value="en">English</option></select></div>
+      <div class="setting-row"><div><strong>字體</strong><small>調整文字閱讀大小</small></div><select data-setting="font" class="setting-select"><option value="small">縮小</option><option value="normal">標準</option><option value="large">放大</option></select></div>
+      <div class="setting-row"><div><strong>色系</strong><small>選擇畫面明暗風格</small></div><select data-setting="theme" class="setting-select"><option value="system">跟隨系統</option><option value="light">亮色</option><option value="dark">暗色</option></select></div>
+    </div>
+    <p class="settings-note">設定會保存在這台裝置的瀏覽器中。</p>
+  </dialog>
+
+  <dialog class="viewer-dialog" id="viewerDialog" aria-label="圖片檢視器">
+    <button class="viewer-close" id="viewerClose" aria-label="關閉圖片">×</button>
+    <button class="viewer-nav prev" id="viewerPrev" aria-label="上一張">‹</button>
+    <div class="viewer-content"><img id="viewerImage" alt=""><div class="viewer-caption"><p id="viewerTitle"></p><div><button id="viewerFavorite" class="viewer-action">♡ 收藏</button><a id="viewerDownload" class="viewer-action" download>↓ 下載</a></div></div></div>
+    <button class="viewer-nav next" id="viewerNext" aria-label="下一張">›</button>
+  </dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="config.js"></script>
+  <script src="app.js" defer></script>
+</body>
+</html>
