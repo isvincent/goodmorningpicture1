@@ -82,6 +82,18 @@ git push -u origin main
 
 新增或移除 Drive 圖片後，網站會在重新載入時重新讀取資料夾，不需重新上傳網站程式。圖片檔案請使用 PNG、JPG、WebP 或其他瀏覽器可顯示的圖片格式，建議檔名直接使用圖片上的句子。
 
+## 一般瀏覽器載入失敗時
+
+若無痕／隱私視窗可以載入，但一般視窗出現「無法連線到 Apps Script」，通常是一般視窗的擴充功能或舊版 Service Worker 快取造成。依序檢查：
+
+1. 在錯誤畫面按「在新分頁檢查 Apps Script 端點」。若看到 Google 登入畫面或權限錯誤，回到 Apps Script 的「部署 → 管理部署」，確認執行身分為「我」、存取權為「所有人」，再編輯部署並選擇新版本。
+2. 若端點沒有要求登入，先在網站按 `Ctrl + Shift + R`（Mac：`Command + Shift + R`）強制重新載入。
+3. 暫時停用廣告封鎖、隱私防護或腳本封鎖擴充功能再測試。若停用後恢復，將 `script.google.com` 與 `script.googleusercontent.com` 加入允許清單。
+4. 若仍載入舊畫面，在 Chrome／Edge 開啟開發者工具的 **Application → Service Workers**，對網站按 **Unregister**，再到 **Storage → Clear site data**，關閉開發者工具後重新載入。
+5. 更新網站檔案到 GitHub 後，等待 Pages 部署完成，再重新載入。新版 Service Worker 會使用新快取並自動移除舊快取。
+
+新分頁直接開啟 `/exec` 網址時若看到「callback 必須是合法名稱」，代表端點已回應；此頁面本來是給網站加上 JSONP callback 呼叫的。若看到 Google 登入或存取拒絕，則是 Apps Script 部署或 Workspace 管理政策問題。
+
 ## 注意事項
 
 - 訪客收藏與顯示設定保存在各自瀏覽器的 `localStorage`，不會同步到其他裝置。
